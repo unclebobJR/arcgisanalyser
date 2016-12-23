@@ -7,6 +7,10 @@ class Melding(object):
 
   def append(self, verloop):
     self.meldingVerloop = verloop
+    
+  def json(self):
+    json = {'klakID':self.ID, 'meldingverloop':self.meldingVerloop.json()}
+    return json
   
   def __str__(self):
     out = "======== melding: " + str(self.ID) + " ========="
@@ -27,6 +31,10 @@ class MeldingVerloopRegel(object):
       else:
         self.toelichting = self.toelichting + " " + toelichting.encode('utf-8')
     
+  def json(self):
+    return {'logdatum':Utils.microTimestamp2HumanReadable(self.logDatum), 'status':self.status,\
+            'toelichting':self.toelichting, 'hersteldatum':Utils.microTimestamp2HumanReadable(self.herstelDatum)}
+    
   def __str__(self):
     out = "\n"
     out = out + self.status + ' - ' + Utils.microTimestamp2HumanReadable(self.logDatum) + "\n"
@@ -46,6 +54,12 @@ class MeldingVerloop(object):
       self.regels.append(regel)
     elif not self.regels[-1] == regel:
       self.regels.append(regel)
+  
+  def json(self):
+    json = []
+    for regel in self.regels:
+      json.append(regel.json())
+    return json
   
   def __str__(self):
     out = ""

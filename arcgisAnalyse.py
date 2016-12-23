@@ -86,7 +86,8 @@ class NetteMelding(object):
 
 
 if __name__ == "__main__":
-    lamda_handler({'klakID':'4134285'}, None)
+    json = lamda_handler({'klakID':'4134285'}, None)
+    print json
 
   
   
