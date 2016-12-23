@@ -11,7 +11,7 @@ def lamda_handler(event, context):
   print("klakID = " + event['klakID'])
   melding = NetteMelding(event['klakID']).getMelding()
   print melding
-  return json.load(melding)
+  return melding.json()
 
 class NetteMelding(object):
 
@@ -86,8 +86,7 @@ class NetteMelding(object):
 
 
 if __name__ == "__main__":
-  melding = NetteMelding('4134285').getMelding()
-  print melding
+    lamda_handler({'klakID':'4134285'}, None)
 
   
   
