@@ -20,19 +20,9 @@ def lamda_handler(event, context):
     if pathParams.has_key('klakID'):
       klakID = pathParams['klakID']
   print("klakID = " + str(klakID))
-  try:
-    melding = NetteMelding(klakID).getMelding()
-    print(melding)
-    return melding.json()
-  except IOError:
-    statuscode = 500
-    message = str(IOError)
-    return "Server Error: " + message
-  except LookupError:
-    statuscode =  404
-    message = str(klakID)
-    return "Not found: " + message
-
+  melding = NetteMelding(klakID).getMelding()
+  print(melding)
+  return melding.json()
 
 class NetteMelding(object):
 
