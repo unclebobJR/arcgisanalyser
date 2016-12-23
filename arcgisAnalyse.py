@@ -1,6 +1,7 @@
 from model.melding import Melding, MeldingVerloop, MeldingVerloopRegel
 from utils.utils import Utils
 from utils.arcgis import ArcGis
+import json
 
 #import pprint
 #pp = pprint.PrettyPrinter(indent=2)
@@ -9,7 +10,8 @@ from utils.arcgis import ArcGis
 def lamda_handler(event, context):
   print("klakID = " + event['klakID'])
   melding = NetteMelding(event['klakID']).getMelding()
-  return melding
+  print melding
+  return json.load(melding)
 
 class NetteMelding(object):
 
