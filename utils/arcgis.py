@@ -16,7 +16,7 @@ class ArcGis(object):
   def getJSON(self):
     out = {}
     if self.requestURL == None:
-      print "Internal Error: request URL is niet gezet"
+      raise Exception("500 Internal Error: request URL is niet gezet")
     else:
       #out = requests.get('http://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer/1/query?where=EditDate+%3E+%272016-10-15+00%3A32%3A00%27&outFields=*&f=json')
       response = requests.get(self.requestURL)
@@ -24,12 +24,12 @@ class ArcGis(object):
         if response.json().has_key('features'):
           out = response.json()['features']
           if out == []:
-            raise LookupError("No element Found: " + str(self.requestURL))
+            raise Exception("404 No element Found: " + str(self.requestURL))
         else:
           error = response.json()['error']
-          raise IOError("ArcGis verbinding lukt niet, status: " + str(error['code']) + "\n"\
+          raise Exception("500 ArcGis verbinding lukt niet, status: " + str(error['code']) + "\n"\
                         + str(error['message']) + "\n" + str(error['details']))
       else:
-        raise IOError("ArcGis verbinding lukt niet, status: " + str(response.status_code) + "\n"\
+        raise Exception("500 ArcGis verbinding lukt niet, status: " + str(response.status_code) + "\n"\
                         + str(self.requestURL) + "\n" + str(response.text))
     return out
