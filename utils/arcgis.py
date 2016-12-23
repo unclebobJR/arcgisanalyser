@@ -8,7 +8,7 @@ class ArcGis(object):
     self.requestURL = None
     
   def setHistorieVanKlakID_URL(self, klakID):
-    self.requestURL = self.arcGisURL + '/1/query?where=KLAK_ID=' + klakID + self.endURL
+    self.requestURL = self.arcGisURL + '/1/query?where=KLAK_ID=' + str(klakID) + self.endURL
     
   def setMeldingSinds_URL(self, sinds):
     self.requestURL = self.arcGisURL + "/0/query?where= EditDate > '" + sinds + "'" + self.endURL

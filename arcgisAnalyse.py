@@ -107,8 +107,9 @@ class NetteMelding(object):
 
 
 if __name__ == "__main__":
-    #json = lamda_handler({'queryParams':{'klakID':'4134285'}}, None)
-    json = lamda_handler({"pathParams":{'klakID':'414285'}}, None)
+    json = lamda_handler({'queryParams':{'klakID':'4134285'}}, None)
+    #json = lamda_handler({"pathParams":{'klakID':'414285'}}, None)
+    #json = lamda_handler({}, None)
     print(json)
 
   
