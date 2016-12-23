@@ -19,7 +19,7 @@ def lamda_handler(event, context):
     pathParams = event['pathParams']
     if pathParams.has_key('klakID'):
       klakID = pathParams['klakID']
-  print("klakID = " + klakID)
+  print("klakID = " + str(klakID))
   try:
     melding = NetteMelding(klakID).getMelding()
     print(melding)
