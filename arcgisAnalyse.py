@@ -6,6 +6,11 @@ from utils.arcgis import ArcGis
 #pp = pprint.PrettyPrinter(indent=2)
 #pp.pprint(logstati)
 
+def lamda_handler(event, context):
+  print("klakID = " + event['klakID'])
+  melding = NetteMelding(event['klakID']).getMelding()
+  print melding
+
 class NetteMelding(object):
 
   def __init__(self, klakID):
