@@ -1,3 +1,4 @@
+from __future__ import print_function
 from model.melding import Melding, MeldingVerloop, MeldingVerloopRegel
 from utils.utils import Utils
 from utils.arcgis import ArcGis
@@ -8,10 +9,30 @@ import json
 #pp.pprint(logstati)
 
 def lamda_handler(event, context):
-  print("klakID = " + event['klakID'])
-  melding = NetteMelding(event['klakID']).getMelding()
-  print melding
-  return melding.json()
+  klakID = -1
+  melding = None
+  if event.has_key('queryParams'):
+    queryParams = event['queryParams']
+    if queryParams.has_key('klakID'):
+      klakID = queryParams['klakID']
+  elif event.has_key('pathParams'):
+    pathParams = event['pathParams']
+    if pathParams.has_key('klakID'):
+      klakID = pathParams['klakID']
+  print("klakID = " + klakID)
+  try:
+    melding = NetteMelding(klakID).getMelding()
+    print(melding)
+    return melding.json()
+  except IOError:
+    statuscode = 500
+    message = str(IOError)
+    return "Server Error: " + message
+  except LookupError:
+    statuscode =  404
+    message = str(klakID)
+    return "Not found: " + message
+
 
 class NetteMelding(object):
 
@@ -86,8 +107,9 @@ class NetteMelding(object):
 
 
 if __name__ == "__main__":
-    json = lamda_handler({'klakID':'4134285'}, None)
-    print json
+    #json = lamda_handler({'queryParams':{'klakID':'4134285'}}, None)
+    json = lamda_handler({"pathParams":{'klakID':'414285'}}, None)
+    print(json)
 
   
   

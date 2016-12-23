@@ -20,10 +20,16 @@ class ArcGis(object):
     else:
       #out = requests.get('http://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer/1/query?where=EditDate+%3E+%272016-10-15+00%3A32%3A00%27&outFields=*&f=json')
       response = requests.get(self.requestURL)
-      if response.status_code == 200 and response.json().has_key('features'):
-        out = response.json()['features']
+      if response.status_code == 200:
+        if response.json().has_key('features'):
+          out = response.json()['features']
+          if out == []:
+            raise LookupError("No element Found: " + str(self.requestURL))
+        else:
+          error = response.json()['error']
+          raise IOError("ArcGis verbinding lukt niet, status: " + str(error['code']) + "\n"\
+                        + str(error['message']) + "\n" + str(error['details']))
       else:
-        print "ArcGis verbinding lukt niet, status: " + str(response.status_code)
-        print self.requestURL
-        print response.text
+        raise IOError("ArcGis verbinding lukt niet, status: " + str(response.status_code) + "\n"\
+                        + str(self.requestURL) + "\n" + str(response.text))
     return out
