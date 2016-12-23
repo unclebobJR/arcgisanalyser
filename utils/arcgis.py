@@ -1,0 +1,29 @@
+import requests
+
+class ArcGis(object):
+  
+  def __init__(self):
+    self.arcGisURL = 'https://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer'
+    self.endURL = '&outFields=*&f=json'
+    self.requestURL = None
+    
+  def setHistorieVanKlakID_URL(self, klakID):
+    self.requestURL = self.arcGisURL + '/1/query?where=KLAK_ID=' + klakID + self.endURL
+    
+  def setMeldingSinds_URL(self, sinds):
+    self.requestURL = self.arcGisURL + "/0/query?where= EditDate > '" + sinds + "'" + self.endURL
+  
+  def getJSON(self):
+    out = {}
+    if self.requestURL == None:
+      print "Internal Error: request URL is niet gezet"
+    else:
+      #out = requests.get('http://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer/1/query?where=EditDate+%3E+%272016-10-15+00%3A32%3A00%27&outFields=*&f=json')
+      response = requests.get(self.requestURL)
+      if response.status_code == 200 and response.json().has_key('features'):
+        out = response.json()['features']
+      else:
+        print "ArcGis verbinding lukt niet, status: " + str(response.status_code)
+        print self.requestURL
+        print response.text
+    return out
