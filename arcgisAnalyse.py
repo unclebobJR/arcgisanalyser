@@ -9,7 +9,7 @@ from utils.arcgis import ArcGis
 def lamda_handler(event, context):
   print("klakID = " + event['klakID'])
   melding = NetteMelding(event['klakID']).getMelding()
-  print melding
+  return melding
 
 class NetteMelding(object):
 
