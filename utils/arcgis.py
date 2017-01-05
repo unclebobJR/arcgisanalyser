@@ -2,8 +2,9 @@ import requests
 
 class ArcGis(object):
   
-  def __init__(self):
-    self.arcGisURL = 'https://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer'
+  def __init__(self, arcGisURL):
+    #self.arcGisURL = 'https://services1.arcgis.com/v6W5HAVrpgSg3vts/ArcGIS/rest/services/OvPortal_v3_Productie/FeatureServer'
+    self.arcGisURL = arcGisURL
     self.endURL = '&outFields=*&f=json'
     self.requestURL = None
     

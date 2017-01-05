@@ -20,15 +20,15 @@ def lamda_handler(event, context):
     if pathParams.has_key('klakID'):
       klakID = pathParams['klakID']
   print("klakID = " + str(klakID))
-  melding = NetteMelding(klakID).getMelding()
+  melding = NetteMelding(klakID, arcGisURL).getMelding()
   print(melding)
   return melding.json()
 
 class NetteMelding(object):
 
-  def __init__(self, klakID):
+  def __init__(self, klakID, arcGisURL):
     self.klakID = klakID
-    self.arcGis = ArcGis()
+    self.arcGis = ArcGis(arcGisURL)
     self.arcGis.setHistorieVanKlakID_URL(klakID)
 
   def collectHistorie(self):
