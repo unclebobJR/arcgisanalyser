@@ -2,6 +2,7 @@ from __future__ import print_function
 from model.melding import Melding, MeldingVerloop, MeldingVerloopRegel
 from utils.utils import Utils
 from utils.arcgis import ArcGis
+import os
 import json
 
 #import pprint
@@ -20,6 +21,7 @@ def lamda_handler(event, context):
     if pathParams.has_key('klakID'):
       klakID = pathParams['klakID']
   print("klakID = " + str(klakID))
+  arcGisURL = os.environ['arcgisurl']
   melding = NetteMelding(klakID, arcGisURL).getMelding()
   print(melding)
   return melding.json()
