@@ -8,10 +8,13 @@ class Utils():
     ms = str(timestamp)
     utc_dt = datetime.utcfromtimestamp(timestamp)
     timestamp = calendar.timegm(utc_dt.timetuple())
-    local_dt = datetime.fromtimestamp(timestamp)
-    assert utc_dt.resolution >= timedelta(microseconds=1)
-    localdt = local_dt.replace(microsecond=utc_dt.microsecond)
-    return str(localdt) + "." + ms[-3:]
+    if timestamp > 0:
+      local_dt = datetime.fromtimestamp(timestamp)
+      assert utc_dt.resolution >= timedelta(microseconds=1)
+      localdt = local_dt.replace(microsecond=utc_dt.microsecond)
+      return str(localdt) + "." + ms[-3:]
+    else:
+      return ""
   
   @staticmethod
   def mergeLogsAtSameDate(currentLog, newLog):

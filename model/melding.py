@@ -37,9 +37,14 @@ class MeldingVerloopRegel(object):
     
   def __str__(self):
     out = "\n"
-    out = out + self.status + ' - ' + Utils.microTimestamp2HumanReadable(self.logDatum) + "\n"
+    out = out + self.status + ' - '
+    if self.logDatum != "":
+      out = out + Utils.microTimestamp2HumanReadable(self.logDatum)
+    out = out + "\n"
     out = out + self.toelichting + "\n"
-    out = out + "verwachte hersteldatum: " + Utils.microTimestamp2HumanReadable(self.herstelDatum)
+    out = out + "verwachte hersteldatum: "
+    if self.herstelDatum != "":
+      out = out + Utils.microTimestamp2HumanReadable(self.herstelDatum)
     return out
   
   def __eq__(self, other):
